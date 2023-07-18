@@ -27,31 +27,29 @@ s consists of parentheses only '()[]{}'. */
 let s = '';
 
 function validStr(s) {
-    s = s.split(''); // ( , ) , [, ], {, }
+    s = s.split('');
 
-    let parenthesesCounter = 0;
-    let curlyBraceCounter = 0;
-    let squareCounter = 0;
+    let stack = [];
 
-
-    for (let i = 0; i < s.length; i++) {
-        if (s[i] == ')') {
-            parenthesesCounter--;
-        }
-        else if (s[i] == '(') {
-            parenthesesCounter++;
-        }
-        if (s[i] == '{') {
-            curlyBraceCounter--;
-        } else if (s[i] == '}') {
-            curlyBraceCounter++
-        }
-        if (s[i] == '[') {
-            squareCounter++;
-        } else if (s[i] == ']')
-            squareCounter--;
+    for (let i = 0; i <= s.length; i++) {
+        if (isSame(stack[stack.length - 1], s[i])) {
+            stack.pop();
+        } else
+            stack.push(s[i])
     }
-    if (parenthesesCounter != 0 || curlyBraceCounter != 0 || squareCounter != 0) {
-        return false;
-    } else return true;
+    if (stack.length == 0) {
+        return true
+    } else return false;
+}
+
+function isSame(symbol, symbolB) {
+    if (symbol == '[' && symbolB == ']') {
+        return true;
+    }
+    if (symbol == '{' && symbolB == '}') {
+        return true;
+    }
+    if (symbol == '(' && symbolB == ')') {
+        return true;
+    }
 }
